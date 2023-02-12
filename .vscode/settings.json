@@ -1,0 +1,8 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "files.autoSave": "onFocusChange",
+  "editor.lineHeight": 2,
+  "files.refactoring.autoSave": true,
+  "prettier.singleQuote": true
+}

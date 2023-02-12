@@ -1,0 +1,66 @@
+{
+  "name": "users-service",
+  "version": "1.0.0",
+  "description": "User service one of the microservices for takez.xyz",
+  "main": "./build/bin/www.js",
+  "scripts": {
+    "start": "NODE_CONFIG_DIR=./build/config node ./build/bin/www.js",
+    "dev": "nodemon -L",
+    "build": "tsc --build",
+    "test:watch": "jest --watchAll"
+  },
+  "author": {
+    "name": "Rey Mark A. Engada",
+    "email": "mhikeking0@gmail.com",
+    "url": "https://cv-makyapps-xyz.web.app"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "express": "^4.18.2",
+    "express-validator": "^6.14.3",
+    "mongoose": "^6.9.0",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
+    "pino": "^8.10.0",
+    "pino-pretty": "^9.2.0"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.4.1",
+    "@types/bcrypt": "^5.0.0",
+    "@types/config": "^3.3.0",
+    "@types/express": "^4.17.16",
+    "@types/express-validator": "^3.0.0",
+    "@types/node": "^18.11.19",
+    "@types/passport": "^1.0.11",
+    "@types/passport-jwt": "^3.0.8",
+    "@types/supertest": "^2.0.12",
+    "nodemon": "^2.0.20",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.0.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  },
+  "nodemonConfig": {
+    "watch": "./src/**/*",
+    "verbose": true,
+    "ext": "ts",
+    "ignore": [
+      "*.test.ts",
+      "node_modules"
+    ],
+    "execMap": {
+      "ts": "ts-node"
+    },
+    "exec": "ts-node ./src/bin/www",
+    "env": {
+      "APP_PORT": 3000,
+      "DB_HOST": "mongodb://localhost:27017",
+      "DB_USER": "root",
+      "DB_PASS": "admin123",
+      "DB_NAME": "takez",
+      "DB_STRICT_QUERY": false,
+      "NODE_ENV": "development"
+    }
+  }
+}
