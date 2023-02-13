@@ -14,16 +14,15 @@ const app: Express = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
+passport.use(access);
 
 app.use(corsMiddleware);
 app.use(logRequestMiddleware);
 
-passport.use("access", access);
-
 app.get("/healthcheck", (_: Request, res: Response) => {
   res.sendStatus(200);
 });
-app.use("/v1", passport.authenticate("access", { session: false }), userRouter);
+app.use("/v1", passport.authenticate("jwt", { session: false }), userRouter);
 app.use("*", (_: Request, res: Response) => {
   return res.sendStatus(404);
 });
