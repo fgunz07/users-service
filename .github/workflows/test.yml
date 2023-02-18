@@ -3,21 +3,26 @@ run-name: ${{ github.actor }} is testing out GitHub Actions
 
 on:
   workflow_dispatch:
+
   push:
     branches:
       - develop
+
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [14.x, 15.x, 16.x, 18.x]
+
     steps:
-      - name: Check out v3
-      - uses: actions/checkout@v3
+      - name: Checking out
+        uses: actions/checkout@v2
+
       - name: Using NODE.JS verion ${{ matrix.node-version }}
-      - uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+
       - run: npm install
       - run: npm run test
