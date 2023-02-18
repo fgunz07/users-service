@@ -8,6 +8,14 @@ on:
     branches:
       - develop
 
+env:
+  PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
+  DB_HOST: ${{ vars.DB_HOST }}
+  DB_USER: ${{ vars.DB_USER }}
+  DB_PASS: ${{ vars.DB_PASS }}
+  DB_NAME: ${{ vars.DB_NAME }}
+  DB_STRICT_QUERY: ${{ vars.DB_STRICT_QUERY }}
+
 jobs:
   test:
     runs-on: ubuntu-latest

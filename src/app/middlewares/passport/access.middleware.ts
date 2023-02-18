@@ -3,8 +3,6 @@ import jwt from "passport-jwt";
 const Strategy = jwt.Strategy;
 const Extract = jwt.ExtractJwt;
 
-console.log(process.env.PUBLIC_KEY);
-
 const access = new Strategy(
   {
     jwtFromRequest: Extract.fromAuthHeaderAsBearerToken(),
