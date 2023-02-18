@@ -1,6 +1,7 @@
 :coffee: User Service
 
-
+[![Test](https://github.com/fgunz07/users-service/actions/workflows/test.yml/badge.svg)](https://github.com/fgunz07/users-service/actions/workflows/test.yml)
+[![Build](https://github.com/fgunz07/users-service/actions/workflows/build.yml/badge.svg)](https://github.com/fgunz07/users-service/actions/workflows/build.yml)
 ---
 One of the microservice for my personal project, this is the only one service I exposed to public, from here you can modefy this codes to make your other services it will be like a template architecture/structured based on __[nodejs best practices](https://github.com/goldbergyoni/nodebestpractices)__.
 
