@@ -1,5 +1,5 @@
-name: Starting test
-run-name: ${{ github.actor }} is testing out GitHub Actions
+name: Starting dist build
+run-name: ${{ github.actor }} is dist building out GitHub Actions
 
 on:
   workflow_dispatch:
@@ -8,17 +8,21 @@ on:
     branches:
       - develop
 
+  pull_request:
+    branches:
+      - main
+
 jobs:
   test:
     runs-on: ubuntu-latest
     
     environment:
-      name: DB_TEST
+      name: TAKEZ_XYZ
     env:
       PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
       DB_HOST: ${{ vars.DB_HOST }}
-      DB_USER: ${{ vars.DB_USER }}
-      DB_PASS: ${{ vars.DB_PASS }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASS: ${{ secrets.DB_PASS }}
       DB_NAME: ${{ vars.DB_NAME }}
       DB_STRICT_QUERY: ${{ vars.DB_STRICT_QUERY }}
     
@@ -28,13 +32,64 @@ jobs:
 
     steps:
       - name: Checking out
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Using NODE.JS verion ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      
-      - run: echo "env ${{ toJSON(vars) }}"
+
       - run: npm ci
       - run: npm run test
+
+  dist:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Checking out
+        uses: actions/checkout@v3
+
+      - name: Using NODE.JS verion ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Archive production artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-artifacts
+          path: dist
+
+  # docker:
+  #   name: Push Docker image to Docker Hub
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out the repo
+  #       uses: actions/checkout@v3
+      
+  #     - name: Log in to Docker Hub
+  #       uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+  #       with:
+  #         username: ${{ secrets.DOCKER_USERNAME }}
+  #         password: ${{ secrets.DOCKER_PASSWORD }}
+      
+  #     - name: Extract metadata (tags, labels) for Docker
+  #       id: meta
+  #       uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+  #       with:
+  #         images: my-docker-hub-namespace/my-docker-hub-repository
+      
+  #     - name: Build and push Docker image
+  #       uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+  #       with:
+  #         context: .
+  #         push: true
+  #         tags: ${{ steps.meta.outputs.tags }}
+  #         labels: ${{ steps.meta.outputs.labels }}
