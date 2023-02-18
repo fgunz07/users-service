@@ -6,7 +6,8 @@ One of the microservice for my personal project, this is the only one service I 
 - clone this repository
 - create a directory name ```keys``` in the root, inside this folder put your public and private keys names ```public.*, private.*```.
 - cd inside the project folder
-- set environment variables ```APP_PORT, DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_STRICT_QUERY```
+- set environment variables ```APP_PORT, DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_STRICT_QUERY,```
+- set environment variables ```PUBLIC_KEY, PRIVATE_KEY``` RS256 for passport-jwt encryption and decryption
 - run ```npm install, npm run dev```
 - run ```npm run build``` to build native ```es2016```
 - run ```npm run test:watch``` to test in watch mode
