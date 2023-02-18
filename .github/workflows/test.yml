@@ -1,0 +1,29 @@
+name: Starting test
+run-name: ${{ github.actor }} is testing out GitHub Actions
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Checking out
+        uses: actions/checkout@v2
+
+      - name: Using NODE.JS verion ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - run: npm ci
+      - run: npm run test
