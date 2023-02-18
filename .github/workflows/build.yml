@@ -1,0 +1,46 @@
+name: Build
+run-name: ${{ github.actor }} is building
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  dist:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: TAKEZ_XYZ
+    env:
+      PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
+      DB_HOST: ${{ vars.DB_HOST }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASS: ${{ secrets.DB_PASS }}
+      DB_NAME: ${{ vars.DB_NAME }}
+      DB_STRICT_QUERY: ${{ vars.DB_STRICT_QUERY }}
+
+    steps:
+      - name: Checking out
+        uses: actions/checkout@v3
+
+      - name: Using NODE.JS verion ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.x
+
+      - run: npm ci
+      - run: npm run test
+      - run: npm run build
+
+      - name: Archive production artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-artifacts
+          path: dist
